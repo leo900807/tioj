@@ -59,13 +59,6 @@
      <% end %>
    </div>
 
-   <div class="form-group">
-     <%= f.label :show_detail_result do %>
-       <%= f.check_box :show_detail_result %>
-       Show detail result of each testdata
-     <% end %>
-   </div>
-
   <div class="form-group">
     <%= f.label :compilers do %>
       Banned compilers
@@ -78,14 +71,6 @@
       <% end %>
     <% end %>
   </div>
-
-   <div class="alert alert-success alert-dismissible" role="alert">
-     <button type="button" class="close" data-dismiss="alert">
-       <span aria-hidden="true">&times;</span>
-       <span class="sr-only">Close</span>
-     </button>
-     <strong>Oh Geez! </strong> <%= "Make sure tasks are set to `visible during contest`." %>
-   </div>
 
    <%= f.fields_for :contest_problem_joints do |t| %>
      <div class="form-group">

@@ -10,7 +10,7 @@
 
   <div class="form-group">
     <%= f.label :username %>
-    <%= f.text_field :username, :class => 'form-control flat' %>
+    <%= f.text_field :username, :class => 'form-control flat', pattern: "[0-9a-zA-Z_]*", placeholder: "letters, digits and underscore only", onchange: "if ($('#user_username').val() === 'admin') { alert('Your login cannot be admin!'); }"%>
   </div>
 
   <div class="form-group">

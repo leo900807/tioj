@@ -2,6 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154615407-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154615407-2');
+</script>
+
 <%= render_page_title_tag %>
 <%= stylesheet_link_tag    "application", media: "all" %>
 <%= javascript_include_tag "application" %>
@@ -20,6 +31,11 @@ MathJax = ({
 <style>
 #page-content{ padding-left: 40px; padding-right: 40px; padding-bottom: 40px; }
 .page-header{ margin: 10px 0 15px; }
+@font-face{
+  font-family: "monofont";
+  src: url("/fonts/DejaVuSansMono.ttf");
+}
+#code-input{ font-family: "monofont"; }
 </style>
 </head>
 

@@ -111,7 +111,7 @@ $("button:not([type='submit'])").attr("type", "button");
             <td class="text-muted">queued</td>
           <% else %>
             <td><%= submission.result %></td>
-        <% end %>
+    <% end %>
         <td><%= compiler_id_name(submission.compiler.id) %></td>
         <td><%= number_to_human_size(submission.code.bytesize) %></td>
         <td><%= sprintf("%g", submission.score) %></td>

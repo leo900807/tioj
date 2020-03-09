@@ -131,6 +131,17 @@ class ContestsController < ApplicationController
   end
 
   def show
+    unless user_signed_in? && current_user.admin == true
+      if @contest.visible_state == 1
+        unless Time.now >= @contest.start_time and Time.now <= @contest.end_time
+          redirect_to :back, :notice => 'Insufficient User Permissions.'
+          return
+        end
+      elsif @contest.visible_state == 2
+        redirect_to :back, :notice => 'Insufficient User Permissions.'
+        return
+      end
+    end
     set_page_title @contest.title
   end
 
@@ -233,13 +244,14 @@ class ContestsController < ApplicationController
       :cd_time,
       :disable_discussion,
       :freeze_time,
-	  :show_detail_result,
+	    :show_detail_result,
+	    :visible_state,
       compiler_ids: [],
       contest_problem_joints_attributes: [
         :id,
         :problem_id,
         :_destroy
-      ]
+      ],
     )
   end
 end

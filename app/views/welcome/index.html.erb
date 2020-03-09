@@ -25,22 +25,24 @@
         </thead>
         <tbody>
           <% @contests.each do |f| %>
-            <tr>
-              <td><%= f.title %></td>
-              <% if user_signed_in? %>
-                <td><%= link_to 'Participate', f, :class => 'btn btn-xs btn-primary', :target => '_blank' %></td>
-              <% end %>
-              <% if Time.now > f.end_time %>
-                <td>Ended</td>
-                <td><%= distance_of_time_in_words_to_now(f.end_time) + " ago" %></td>
-              <% elsif Time.now > f.start_time %>
-                <td>Ready</td>
-                <td>Now</td>
-              <% else %>
-                <td>Not yet</td>
-                <td><%= distance_of_time_in_words_to_now(f.start_time) %></td>
-              <% end %>
-            </tr>
+            <% if (user_signed_in? and current_user.admin?) or (f.visible_state == 0) or (f.visible_state == 1 and Time.now > f.start_time and Time.now < f.end_time) %>
+              <tr>
+                <td><%= f.title %></td>
+                <% if user_signed_in? %>
+                  <td><%= link_to 'Participate', f, :class => 'btn btn-xs btn-primary', :target => '_blank' %></td>
+                <% end %>
+                <% if Time.now > f.end_time %>
+                  <td>Ended</td>
+                  <td><%= distance_of_time_in_words_to_now(f.end_time) + " ago" %></td>
+                <% elsif Time.now > f.start_time %>
+                  <td>Ready</td>
+                  <td>Now</td>
+                <% else %>
+                  <td>Not yet</td>
+                  <td><%= distance_of_time_in_words_to_now(f.start_time) %></td>
+                <% end %>
+              </tr>
+            <% end %>
           <% end %>
         </tbody>
       </table>
@@ -74,4 +76,3 @@
     </div>
   </div>
 </div>
-

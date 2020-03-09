@@ -29,7 +29,18 @@ class SubmissionsController < ApplicationController
 
   def index
     @submissions = @submissions.order(id: :desc).page(params[:page]).preload(:user, :compiler, :problem)
-    unless user_signed_in? and current_user.admin?
+    unless user_signed_in? && current_user.admin?
+      unless @contest.blank?
+        if @contest.visible_state == 1
+          unless Time.now >= @contest.start_time and Time.now <= @contest.end_time
+            redirect_to :back, :notice => 'Insufficient User Permissions.'
+            return
+          end
+        elsif @contest.visible_state == 2
+          redirect_to :back, :notice => 'Insufficient User Permissions.'
+          return
+        end
+      end
       @submissions = @submissions.preload(:contest)
     end
     @submissions = @submissions.select("STRAIGHT_JOIN `submissions`.*");
@@ -37,6 +48,19 @@ class SubmissionsController < ApplicationController
   end
 
   def show
+    unless user_signed_in? and current_user.admin?
+      unless @contest.blank?
+        if @contest.visible_state == 1
+          unless Time.now >= @contest.start_time and Time.now <= @contest.end_time
+            redirect_to :back, :notice => 'Insufficient User Permissions.'
+            return
+          end
+        elsif @contest.visible_state == 2
+          redirect_to :back, :notice => 'Insufficient User Permissions.'
+          return
+        end
+      end
+    end
     unless (user_signed_in? and current_user.admin?) or (user_signed_in? and current_user.id == @submission.user_id) or not @submission.contest
       if Time.now <= @submission.contest.end_time
         redirect_to contest_path(@submission.contest), :notice => 'Submission is censored during contest.'

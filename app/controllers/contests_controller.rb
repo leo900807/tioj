@@ -116,6 +116,17 @@ class ContestsController < ApplicationController
   end
 
   def dashboard
+    unless user_signed_in? and current_user.admin?
+        if @contest.visible_state == 1
+          unless Time.now >= @contest.start_time and Time.now <= @contest.end_time
+            redirect_to :back, :notice => 'Insufficient User Permissions.'
+            return
+          end
+        elsif @contest.visible_state == 2
+          redirect_to :back, :notice => 'Insufficient User Permissions.'
+          return
+        end
+    end
     set_page_title ("Dashboard - " + @contest.title)
   end
 
@@ -255,3 +266,4 @@ class ContestsController < ApplicationController
     )
   end
 end
+

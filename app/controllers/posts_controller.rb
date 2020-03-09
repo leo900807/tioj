@@ -9,11 +9,22 @@ class PostsController < ApplicationController
   def index
     @posts = @posts.order("updated_at DESC").page(params[:page]).includes(:user).preload(comments: :user)
     if @contest
-        @title = "Q & A"
-        set_page_title "Q & A"
+      unless (user_signed_in? and current_user.admin?)
+        if @contest.visible_state == 1
+          unless Time.now >= @contest.start_time and Time.now <= @contest.end_time
+            redirect_to :back, :notice => 'Insufficient User Permissions.'
+            return
+          end
+        elsif @contest.visible_state == 2
+          redirect_to :back, :notice => 'Insufficient User Permissions.'
+          return
+        end
+      end
+      @title = "Q & A"
+      set_page_title "Q & A"
     else
-        @title = "Discuss"
-        set_page_title = "Discuss"
+      @title = "Discuss"
+      set_page_title = "Discuss"
     end
   end
 
@@ -26,6 +37,19 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
+    if @contest
+      unless (user_signed_in? and current_user.admin?)
+        if @contest.visible_state == 1
+          unless Time.now >= @contest.start_time and Time.now <= @contest.end_time
+            redirect_to :back, :notice => 'Insufficient User Permissions.'
+            return
+          end
+        elsif @contest.visible_state == 2
+          redirect_to :back, :notice => 'Insufficient User Permissions.'
+          return
+        end
+      end
+    end
     @post = @posts.build
     set_page_title "New post"
   end
@@ -141,3 +165,4 @@ class PostsController < ApplicationController
     )
   end
 end
+

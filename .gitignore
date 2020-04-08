@@ -35,6 +35,7 @@
 /public/cppref
 /public/INFOR
 /public/test
+/public/files
 
 # Ignore binaries
 /bin

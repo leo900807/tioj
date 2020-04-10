@@ -19,7 +19,7 @@
 
     <div class="form-group">
         <%= f.label :title, "Title:"%> <br />
-        <%= f.text_field :title, :class => 'form-control', :list => 'title-list'%>
+        <%= f.text_field :title, :class => 'form-control', :placeholder => 'Title', :list => 'title-list'%>
         <% if @contest %>
             <datalist id="title-list">
                 <option value="General"></option>

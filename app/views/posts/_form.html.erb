@@ -19,7 +19,7 @@
 
     <div class="form-group">
         <%= f.label :title, "Title:"%> <br />
-        <%= f.text_field :title, :class=> 'form-control', :list=>'title-list'%>
+        <%= f.text_field :title, :class => 'form-control', :list => 'title-list'%>
         <% if @contest %>
             <datalist id="title-list">
                 <option value="General"></option>
@@ -32,7 +32,7 @@
     <div class="form-group">
         <%= f.label :content, "Content:" %> <br />note: all characters are rendered with
         <a href="https://guides.github.com/features/mastering-markdown/" >Markdown</a>. <br />
-        <%= f.text_area :content, :class=> 'form-control', :placeholder=>'Content'%>
+	<%= f.text_area :content, :class => 'form-control', :placeholder => 'Content', :rows => "5"%>
     </div>
     <% if not @contest or current_user.admin? %>
       <div class="form-group">

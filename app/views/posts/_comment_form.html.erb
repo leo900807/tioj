@@ -8,10 +8,30 @@
     <%= f.label :title, 'Title: ' %>
     <%= f.text_field :title %>
     </div>
+    <% if @contest and current_user.admin? %>
+        <script type="text/javascript">
+            function update_comment_content(name){
+                var objs = document.getElementsByName(name);
+                var contents = document.getElementsByName("comment[content]");
+                for(var i = 0; i < objs.length; i++)
+                    if(objs[i].selectedIndex != 5)
+                            contents[i].value = objs[i].value;
+            }
+        </script>
+        <label for="quick_answer">Quick Answer: </label>
+        <select id="quick_answer" name="q_answer" onchange="update_comment_content(this.name)">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+            <option value="Answered in task description">Answered in task description</option>
+            <option value="Invalid question">Invalid question</option>
+            <option value="No comment">No comment</option>
+            <option selected="" value="Other">Other</option>
+        </select>
+    <% end %>
     <div class="field">
         <%= f.label :content, "Content: "%> <small> &nbsp; (All characters are rendered with
             <a href="https://guides.github.com/features/mastering-markdown/" >Markdown</a>)</small><br />
-    <%= f.text_area :content, :rows => "5", :cols => "80" %>
+        <%= f.text_area :content, :rows => "5", :cols => "80" %>
     </div>
     <br />
     <div class="submit_comment" >

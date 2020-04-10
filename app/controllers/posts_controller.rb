@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_posts, :check_contest
+  before_action :set_tasks, only: [:new, :edit]
   before_action :check_user!, only: [:edit, :update, :destroy]
   layout :set_contest_layout, only: [:show, :index, :new, :edit]
 
@@ -113,6 +114,12 @@ class PostsController < ApplicationController
         redirect_to root_path, :alert => "No discussion during contest."
         return
       end
+    end
+  end
+
+  def set_tasks
+    if @contest
+      @tasks = @contest.problems.order("id ASC")
     end
   end
 

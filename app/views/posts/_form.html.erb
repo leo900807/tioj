@@ -19,7 +19,15 @@
 
     <div class="form-group">
         <%= f.label :title, "Title:"%> <br />
-        <%= f.text_field :title, :class=> 'form-control', :placeholder=>'Title'%>
+        <%= f.text_field :title, :class=> 'form-control', :list=>'title-list'%>
+        <% if @contest %>
+            <datalist id="title-list">
+                <option value="General"></option>
+                <% @tasks.each_with_index do |task, index|%>
+                    <option value="<%= 'p' + (65+index).chr%>"></option>
+                <% end %>
+            </datalist>
+        <% end %>
     </div>
     <div class="form-group">
         <%= f.label :content, "Content:" %> <br />note: all characters are rendered with
@@ -38,4 +46,3 @@
         <%= f.submit :class=>"btn btn-primary "%>
     </div>
 <% end %>
-

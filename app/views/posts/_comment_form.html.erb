@@ -12,19 +12,22 @@
         <script type="text/javascript">
             function update_comment_content(name){
                 var objs = document.getElementsByName(name);
-		var contents = document.getElementsByName("comment[content]");
-		var labels = document.getElementsByName("content_label");
+                var contents = document.getElementsByName("comment[content]");
+                var labels = document.getElementsByName("content_label");
+                var hints = document.getElementsByName("content_hint");
                 for(var i = 0; i < objs.length; i++)
-		    if(objs[i].selectedIndex != 5){
-		        contents[i].value = objs[i].value;
-			contents[i].style = "display:none";
-			labels[i].style = "display:none";
-                    }
-		    else{
-			contents[i].value = "";
-			contents[i].style = "";
-			labels[i].style = "";
-		    }
+                if(objs[i].selectedIndex != 5){
+                    contents[i].value = objs[i].value;
+                    contents[i].style = "display:none";
+                    labels[i].style = "display:none";
+                    hints[i].style = "display:none";
+                }
+                else{
+                    contents[i].value = "";
+                    contents[i].style = "";
+                    labels[i].style = "";
+                    hints[i].style = "";
+                }
             }
         </script>
         <label for="quick_answer">Quick Answer: </label>
@@ -38,8 +41,8 @@
         </select>
     <% end %>
     <div class="field">
-	    <%= f.label :content, "Content: ", :name => "content_label" %> <small> &nbsp; (All characters are rendered with
-            <a href="https://guides.github.com/features/mastering-markdown/" >Markdown</a>)</small><br />
+        <%= f.label :content, "Content: ", :name => "content_label" %> <span name="content_hint"><small> &nbsp; (All characters are rendered with
+            <a href="https://guides.github.com/features/mastering-markdown/" >Markdown</a>)</small></span><br />
         <%= f.text_area :content, :rows => "5", :cols => "80" %>
     </div>
     <br />

@@ -11,7 +11,8 @@ module ApplicationHelper
       fenced_code_blocks: true,
       lax_html_blocks: true,
       strikethrough: true,
-      superscript: true
+      superscript: true,
+      space_after_headers: true
     }
     Redcarpet::Markdown.new(renderer, options).render(text).html_safe
   end
@@ -32,7 +33,8 @@ module ApplicationHelper
       fenced_code_blocks: true,
       lax_html_blocks: true,
       strikethrough: true,
-      superscript: true
+      superscript: true,
+      space_after_headers: true
     }
     Redcarpet::Markdown.new(renderer, options).render(text).html_safe
   end

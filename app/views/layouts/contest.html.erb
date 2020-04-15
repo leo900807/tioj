@@ -11,7 +11,7 @@
 
   gtag('config', 'UA-154615407-3');
 </script>
-	
+  
 <meta charset="utf-8" />
 <%= render_page_title_tag %>
 <%= stylesheet_link_tag    "application", media: "all" %>
@@ -97,6 +97,49 @@ MathJax = ({
       <strong>Oh No! </strong> <%= alert %>
     </div>
   <% end %>
+  <script type="text/javascript">
+    var date;
+    var sys_time;
+    var refresh;
+
+    window.addEventListener('pageshow', function(){
+      refresh = 0;
+    });
+
+    window.onpageshow = updateTime();
+
+    function getDate(){
+      return new Date($.ajax({async: false}).getResponseHeader("Date"));
+    }
+
+    function updateTime(){
+      if(refresh === 0){
+        date = getDate();
+        sys_time = date.getTime();
+      }
+      showTime();
+      sys_time += 1000;
+      refresh = (refresh + 1) % 300;
+    }
+    
+    function showTime(){
+      var now = new Date(sys_time);
+      var h = now.getUTCHours() + 8;
+      var m = now.getUTCMinutes();
+      var s = now.getUTCSeconds();
+      var obj = document.getElementById("server-time");
+      if(obj)
+        document.getElementById("server-time").innerHTML = '伺服器時間：' + format_time(h) + ':' + format_time(m) + ':' + format_time(s) + ' (UTC+8)';
+      setTimeout(updateTime, 1000);
+    }
+
+    function format_time(i){
+      if(i < 10)
+        i = '0' + i;
+      return i;
+    }
+  </script>
+  <span id="server-time">伺服器時間：</span>
   <%= yield %>
 
 </div>

@@ -124,7 +124,7 @@ MathJax = ({
     
     function showTime(){
       var now = new Date(sys_time);
-      var h = now.getUTCHours() + 8;
+      var h = (now.getUTCHours() + 8) % 24;
       var m = now.getUTCMinutes();
       var s = now.getUTCSeconds();
       var obj = document.getElementById("server-time");

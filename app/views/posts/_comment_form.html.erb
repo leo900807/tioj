@@ -30,15 +30,8 @@
                 }
             }
         </script>
-        <label for="quick_answer">Quick Answer: </label>
-        <select id="quick_answer" name="q_answer" onchange="update_comment_content(this.name)">
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-            <option value="Answered in task description">Answered in task description</option>
-            <option value="Invalid question">Invalid question</option>
-            <option value="No comment">No comment</option>
-            <option selected="" value="Other">Other</option>
-        </select>
+        <%= label_tag :quick_answer, "Quick Answer:" %>
+        <%= select_tag :quick_answer, options_for_select([["Yes", "Yes"], ["No", "No"], ["Answered in task description", "Answered in task description"], ["Invalid question", "Invalid question"], ["No comment", "No comment"], ["Other", "Other"]], "Other"), :onchange => "update_comment_content(this.name)", :name => "quick_answer" %>
     <% end %>
     <div class="field">
         <%= f.label :content, "Content: ", :name => "content_label" %> <span name="content_hint"><small> &nbsp; (All characters are rendered with

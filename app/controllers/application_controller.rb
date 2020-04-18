@@ -115,4 +115,12 @@ protected
     prob.testdata_sets.map.with_index{|x, i| td_list_to_arr(x.td_list, sz).map{|y| [y, i]}}
         .flatten(1).group_by(&:first).map{|x, y| [x, y.map(&:last)]}.to_h
   end
+
+  def back_or_default
+    if request.env["HTTP_REFERER"].present? and request.env["HTTP_REFERER"] != request.env["REQUEST_URI"]
+      return :back
+    else
+      return root_url
+    end
+  end
 end

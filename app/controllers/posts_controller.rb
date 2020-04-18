@@ -13,11 +13,11 @@ class PostsController < ApplicationController
       unless (user_signed_in? and current_user.admin?)
         if @contest.visible_state == 1
           unless Time.now >= @contest.start_time and Time.now <= @contest.end_time
-            redirect_to :back, :notice => 'Insufficient User Permissions.'
+            redirect_to back_or_default, :notice => 'Insufficient User Permissions.'
             return
           end
         elsif @contest.visible_state == 2
-          redirect_to :back, :notice => 'Insufficient User Permissions.'
+          redirect_to back_or_default, :notice => 'Insufficient User Permissions.'
           return
         end
       end
@@ -42,11 +42,11 @@ class PostsController < ApplicationController
       unless (user_signed_in? and current_user.admin?)
         if @contest.visible_state == 1
           unless Time.now >= @contest.start_time and Time.now <= @contest.end_time
-            redirect_to :back, :notice => 'Insufficient User Permissions.'
+            redirect_to back_or_default, :notice => 'Insufficient User Permissions.'
             return
           end
         elsif @contest.visible_state == 2
-          redirect_to :back, :notice => 'Insufficient User Permissions.'
+          redirect_to back_or_default, :notice => 'Insufficient User Permissions.'
           return
         end
       end

@@ -31,15 +31,15 @@ class ProblemsController < ApplicationController
     unless user_signed_in? && current_user.admin == true
       if @problem.visible_state == 1
         if params[:contest_id].blank?
-          redirect_to :back, :notice => 'Insufficient User Permissions.'
+          redirect_to back_or_default, :notice => 'Insufficient User Permissions.'
           return
         end
         unless @contest.problem_ids.include?(@problem.id) and Time.now >= @contest.start_time and Time.now <= @contest.end_time
-          redirect_to :back, :notice => 'Insufficient User Permissions.'
+          redirect_to back_or_default, :notice => 'Insufficient User Permissions.'
           return
         end
       elsif @problem.visible_state == 2
-        redirect_to :back, :notice => 'Insufficient User Permissions.'
+        redirect_to root_url, :notice => 'Insufficient User Permissions.'
         return
       end
     end

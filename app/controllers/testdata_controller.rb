@@ -1,10 +1,19 @@
 class TestdataController < ApplicationController
   before_action :authenticate_admin!
   before_action :set_problem
-  before_action :set_testdatum, only: [:edit, :update, :destroy]
+  before_action :set_testdatum, only: [:edit, :update, :destroy, :show]
 
   def index
     @testdata = @problem.testdata.order(position: :asc).includes(:limit)
+  end
+
+  def show
+    if params[:input]
+      @path = @testdatum.test_input
+    else
+      @path = @testdatum.test_output
+    end
+    render text: File.read(@path.to_s).gsub("\n", '<br>')
   end
 
   def new

@@ -129,7 +129,7 @@ MathJax = ({
       var s = now.getUTCSeconds();
       var obj = document.getElementById("server-time");
       if(obj)
-        document.getElementById("server-time").innerHTML = '伺服器時間：' + format_time(h) + ':' + format_time(m) + ':' + format_time(s) + ' (UTC+8)';
+        document.getElementById("server-time").innerHTML = format_time(h) + ':' + format_time(m) + ':' + format_time(s);
       setTimeout(updateTime, 1000);
     }
 
@@ -139,7 +139,7 @@ MathJax = ({
       return i;
     }
   </script>
-  <span id="server-time">伺服器時間：</span>
+  <span>伺服器時間：</span><span id="server-time"></span><span> (UTC+8)</span><span style="font-size:12px"> 僅供參考</span>
   <%= yield %>
 
 </div>

@@ -23,7 +23,7 @@
 
   <tbody>
     <% @contests.each do |contest| %>
-      <% if (user_signed_in? and current_user.admin?) or (contest.visible_state == 0) or (contest.visible_state == 1 and Time.now > contest.start_time and Time.now < contest.end_time) %>
+      <% if (user_signed_in? and current_user.admin?) or (contest.visible_state == 0) or (contest.visible_state == 1 and Time.now >= contest.start_time - 5 * 60 and Time.now <= contest.end_time) %>
         <tr>
           <td><%= contest.title %></td>
 	  <% if user_signed_in? %>

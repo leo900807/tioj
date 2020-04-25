@@ -98,12 +98,16 @@ MathJax = ({
     </div>
   <% end %>
   <script type="text/javascript">
-    var date;
     var sys_time;
     var refresh;
 
     window.addEventListener('pageshow', function(){
       refresh = 0;
+    });
+
+    document.addEventListener('visibilitychange', function(){
+      if(!document.hidden)
+        refresh = 0;
     });
 
     window.onpageshow = updateTime();
@@ -113,16 +117,15 @@ MathJax = ({
     }
 
     function updateTime(){
-      if(refresh === 0){
-        date = getDate();
-        sys_time = date.getTime();
-      }
+      if(refresh === 0)
+        sys_time = getDate().getTime();
       showTime();
       sys_time += 1000;
       refresh = (refresh + 1) % 300;
     }
     
     function showTime(){
+      const st = new Date().getTime();;
       var now = new Date(sys_time);
       var h = (now.getUTCHours() + 8) % 24;
       var m = now.getUTCMinutes();
@@ -130,7 +133,8 @@ MathJax = ({
       var obj = document.getElementById("server-time");
       if(obj)
         document.getElementById("server-time").innerHTML = format_time(h) + ':' + format_time(m) + ':' + format_time(s);
-      setTimeout(updateTime, 1000);
+      const ed = new Date().getTime();
+      setTimeout(updateTime, 1000 - (ed - st));
     }
 
     function format_time(i){
@@ -139,7 +143,7 @@ MathJax = ({
       return i;
     }
   </script>
-  <span>伺服器時間：</span><span id="server-time"></span><span> (UTC+8)</span><span style="font-size:12px"> 僅供參考</span>
+  <span>Server Time：</span><span id="server-time"></span><span> (UTC+8)</span>
   <%= yield %>
 
 </div>

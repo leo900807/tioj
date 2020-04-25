@@ -5,7 +5,11 @@ class WelcomeController < ApplicationController
       @bulletins = @bulletins.where(public: true)
     end
     @bulletins = @bulletins.limit(5)
-    @contests = Contest.order("id DESC").limit(3)
+    unless user_signed_in? and current_user.admin?
+      @contests = Contest.where("visible_state = 0 or (visible_state = 1 and now() between start_time and end_time)").order("id DESC").limit(3)
+    else
+      @contests = Contest.order("id DESC").limit(3)
+    end
     @users = get_sorted_user.take(10)
   end
 

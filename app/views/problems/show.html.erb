@@ -35,63 +35,65 @@
 <% end %>
 </p>
 
-<div class="row">
-  <div class="col-md-4">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h1 class="panel-title">TopCoder</h1>
-      </div>
-      <div class="panel-body">
-        <% tcoder = topcoder(@problem) %>
-        <% if tcoder %>
-          <div class="row">
-            <div class="col-md-5">
-              <%= link_to image_tag(tcoder.avatar.thumb.to_s, :class => "img-thumbnail img-responsive"), user_path(tcoder) %>
-            </div>
-            <div class="col-md-7">
-              <%= link_to tcoder.nickname, user_path(tcoder) %><br>
-              <blockquote><dfn><%= tcoder.motto %></dfn></blockquote>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-5">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h1 class="panel-title">User's AC Ratio</h1>
-          </div>
-          <div class="panel-body">
-            <%= users_ac_ratio(@problem) %>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h1 class="panel-title">Submission's AC Ratio</h1>
-          </div>
-          <div class="panel-body">
-            <%= submissions_ac_ratio(@problem) %>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h1 class="panel-title">Tags</h1>
-      </div>
-      <div class="panel-body">
-        <%= raw @problem.tag_list.map{ |a| link_to a, problems_tag_path(a), :class => 'btn btn-xs btn-default' }.join(" ") %>
-      </div>
-    </div>
-  </div>
-</div>
+<% unless @contest %>
+	<div class="row">
+	  <div class="col-md-4">
+	    <div class="panel panel-default">
+	      <div class="panel-heading">
+	        <h1 class="panel-title">TopCoder</h1>
+	      </div>
+	      <div class="panel-body">
+	        <% tcoder = topcoder(@problem) %>
+	        <% if tcoder %>
+	          <div class="row">
+	            <div class="col-md-5">
+	              <%= link_to image_tag(tcoder.avatar.thumb.to_s, :class => "img-thumbnail img-responsive"), user_path(tcoder) %>
+	            </div>
+	            <div class="col-md-7">
+	              <%= link_to tcoder.nickname, user_path(tcoder) %><br>
+	              <blockquote><dfn><%= tcoder.motto %></dfn></blockquote>
+	            </div>
+	          </div>
+	        <% end %>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="col-md-5">
+	    <div class="row">
+	      <div class="col-md-6">
+	        <div class="panel panel-default">
+	          <div class="panel-heading">
+	            <h1 class="panel-title">User's AC Ratio</h1>
+	          </div>
+	          <div class="panel-body">
+	            <%= users_ac_ratio(@problem) %>
+	          </div>
+	        </div>
+	      </div>
+	      <div class="col-md-6">
+	        <div class="panel panel-default">
+	          <div class="panel-heading">
+	            <h1 class="panel-title">Submission's AC Ratio</h1>
+	          </div>
+	          <div class="panel-body">
+	            <%= submissions_ac_ratio(@problem) %>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="col-md-3">
+	    <div class="panel panel-default">
+	      <div class="panel-heading">
+	        <h1 class="panel-title">Tags</h1>
+	      </div>
+	      <div class="panel-body">
+	        <%= raw @problem.tag_list.map{ |a| link_to a, problems_tag_path(a), :class => 'btn btn-xs btn-default' }.join(" ") %>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+<% end %>
 
 <div class="panel panel-default">
   <div class="panel-heading">

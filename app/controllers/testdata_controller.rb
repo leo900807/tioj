@@ -13,7 +13,11 @@ class TestdataController < ApplicationController
     else
       @path = @testdatum.test_output
     end
-    render text: File.read(@path.to_s).gsub("\n", '<br>')
+    if params[:download]
+        send_file(@path.to_s)
+    else
+        render text: File.read(@path.to_s).gsub("\n", '<br>')
+    end
   end
 
   def new

@@ -61,6 +61,7 @@ Tioj::Application.routes.draw do
 
   match '/404' => 'errors#not_found', via: :all
   match '/500' => 'errors#server_error', via: :all
+  match '/422' => 'errors#unprocessable_entity', via: :all
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

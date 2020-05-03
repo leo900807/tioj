@@ -144,7 +144,7 @@ class ContestsController < ApplicationController
   def show
     unless user_signed_in? && current_user.admin == true
       if @contest.visible_state == 1
-        unless Time.now >= @contest.start_time - 5 * 60 and Time.now <= @contest.end_time
+        unless Time.now >= @contest.start_time - 10 * 60 and Time.now <= @contest.end_time
           redirect_to back_or_default, :notice => 'Insufficient User Permissions.'
           return
         end

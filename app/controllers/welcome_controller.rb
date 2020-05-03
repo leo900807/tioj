@@ -6,7 +6,7 @@ class WelcomeController < ApplicationController
     end
     @bulletins = @bulletins.limit(5)
     unless user_signed_in? and current_user.admin?
-      @contests = Contest.where("visible_state = 0 or (visible_state = 1 and now() between start_time and end_time)").order("id DESC").limit(3)
+      @contests = Contest.where("visible_state = 0 or (visible_state = 1 and (now() between start_time and end_time or timediff(start_time, now()) < \'00:10:00\'))").order("id DESC").limit(3)
     else
       @contests = Contest.order("id DESC").limit(3)
     end

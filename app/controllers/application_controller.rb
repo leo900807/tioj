@@ -120,7 +120,7 @@ protected
     if request.env["HTTP_REFERER"].present? and request.env["HTTP_REFERER"] != request.env["REQUEST_URI"]
       return :back
     else
-      return root_url
+      return root_path
     end
   end
 end

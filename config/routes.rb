@@ -58,6 +58,9 @@ Tioj::Application.routes.draw do
 
   get 'problems/:id/*file' => redirect{ |path, req| "/#{path[:file]}"}, :format => false, :id => /[0-9]+/
   get 'problems/*file' => redirect{ |path, req| "/#{path[:file]}"}, :format => false
+
+  match '/404' => 'errors#not_found', via: :all
+  match '/500' => 'errors#server_error', via: :all
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

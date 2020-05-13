@@ -1,2 +1,2 @@
-module ErrorssHelper
+module ErrorsHelper
 end

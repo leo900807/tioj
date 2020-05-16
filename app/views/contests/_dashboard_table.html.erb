@@ -9,61 +9,39 @@
   <% else %>
     <tr>
   <% end %>
-    <% if @contest.contest_type == 1 and  Time.now >= @contest.start_time and Time.now <= @contest.end_time %>
-      <% if user_signed_in? and current_user.admin? %>
-        <td><%= s[-1] %></td>
-        <td><%= link_to image_tag(s[0].avatar.mini_thumb.to_s, :class => "img-rounded"), user_path(s[0]) %></td>
-        <td><%= link_to s[0].username, contest_submissions_path(@contest, :filter_user_id => s[0].id) %></td>
-        <td><%= s[0].nickname %></td>
-        <% s[1].each do |t|%>
-          <td><%= sprintf("%g", t) %></td>
-        <% end %>
-        <td><%= sprintf("%g", s[2]) %></td>
-      <% elsif user_signed_in? and current_user.username == s[0].username %>
-        <td> - </td>
-        <td><%= link_to image_tag(s[0].avatar.mini_thumb.to_s, :class => "img-rounded"), user_path(s[0]) %></td>
-        <td><%= link_to s[0].username, contest_submissions_path(@contest, :filter_user_id => s[0].id) %></td>
-        <td><%= s[0].nickname %></td>
-        <% s[1].each do |t|%>
-          <td><%= sprintf("%g", t) %></td>
-        <% end %>
-        <td><%= sprintf("%g", s[2]) %></td>
-      <% end %>
-    <% else %>
-      <td><%= s[-1] %></td>
-      <td><%= link_to image_tag(s[0].avatar.mini_thumb.to_s, :class => "img-rounded"), user_path(s[0]) %></td>
-      <td><%= link_to s[0].username, contest_submissions_path(@contest, :filter_user_id => s[0].id) %></td>
-      <td><%= s[0].nickname %></td>
-      <% if @contest.contest_type == 2 %>
-        <% s[3].each do |t|%>
-          <td>
-            <% if t[2] %>
-              <span style="color:#008000;"><strong><%= t[0].to_s %><small><%= "/" + t[1].to_s %></small></strong></span>
-            <% elsif t[1] >= 0 %>
-              <span class="text-success"><strong><%= t[0].to_s %></strong></span><small><%= "/" + t[1].to_s %></small>
-            <% elsif t[0] > 0 %>
-              <% if t[3] > 0 %>
-                <span class="text-danger"><strong><%= t[0].to_s %></strong></span>+<span style="color:#888;"><strong><%= t[3].to_s %></strong></span>
-              <% else %>
-                <span class="text-danger"><strong><%= t[0].to_s %></strong></span>
-              <% end %>
+    <td><%= s[-1] %></td>
+    <td><%= link_to image_tag(s[0].avatar.mini_thumb.to_s, :class => "img-rounded"), user_path(s[0]) %></td>
+    <td><%= link_to s[0].username, contest_submissions_path(@contest, :filter_user_id => s[0].id) %></td>
+    <td><%= s[0].nickname %></td>
+    <% if @contest.contest_type == 2 %>
+      <% s[3].each do |t|%>
+        <td>
+          <% if t[2] %>
+            <span style="color:#008000;"><strong><%= t[0].to_s %><small><%= "/" + t[1].to_s %></small></strong></span>
+          <% elsif t[1] >= 0 %>
+            <span class="text-success"><strong><%= t[0].to_s %></strong></span><small><%= "/" + t[1].to_s %></small>
+          <% elsif t[0] > 0 %>
+            <% if t[3] > 0 %>
+              <span class="text-danger"><strong><%= t[0].to_s %></strong></span>+<span style="color:#888;"><strong><%= t[3].to_s %></strong></span>
             <% else %>
-              <% if t[3] > 0 %>
-                0+<span style="color:#888;"><strong><%= t[3].to_s %></strong></span>
-              <% else %>
-                <%= '-' %>
-              <% end %>
+              <span class="text-danger"><strong><%= t[0].to_s %></strong></span>
             <% end %>
-          </td>
-        <% end %>
-        <td><%= s[2].to_s %></td>
-        <td><%= s[4] %></td>
-      <% else %>
-        <% s[1].each do |t|%>
-          <td><%= sprintf("%g", t) %></td>
-        <% end %>
-        <td><%= sprintf("%g", s[2]) %></td>
+          <% else %>
+            <% if t[3] > 0 %>
+              0+<span style="color:#888;"><strong><%= t[3].to_s %></strong></span>
+            <% else %>
+              <%= '-' %>
+            <% end %>
+          <% end %>
+        </td>
       <% end %>
+      <td><%= s[2].to_s %></td>
+      <td><%= s[4] %></td>
+    <% else %>
+      <% s[1].each do |t|%>
+        <td><%= sprintf("%g", t) %></td>
+      <% end %>
+      <td><%= sprintf("%g", s[2]) %></td>
     <% end %>
   </tr>
 <% end %>

@@ -8,7 +8,11 @@
     <%= link_to 'Submit', {:controller => :submissions, :action => :new, :problem_id => @problem.id, :contest_id => @contest}, { :class => 'btn btn-success btn-xs btn-block' } %>
   </div>
   <div class="col-md-2">
-    <%= link_to 'Status', problem_submissions_path(@problem), :class => 'btn btn-info btn-xs btn-block' %>
+    <% if @contest %>
+      <%= link_to 'Status', contest_submissions_path(@contest, :filter_problem => @problem.id), :class => 'btn btn-info btn-xs btn-block' %>
+    <% else %>
+      <%= link_to 'Status', problem_submissions_path(@problem), :class => 'btn btn-info btn-xs btn-block' %>
+    <% end %>
   </div>
   <div class="col-md-2">
     <%= link_to 'Ranklist', problem_ranklist_path(@problem), :class => 'btn btn-inverse btn-xs btn-block' %>
@@ -36,63 +40,63 @@
 </p>
 
 <% unless @contest %>
-	<div class="row">
-	  <div class="col-md-4">
-	    <div class="panel panel-default">
-	      <div class="panel-heading">
-	        <h1 class="panel-title">TopCoder</h1>
-	      </div>
-	      <div class="panel-body">
-	        <% tcoder = topcoder(@problem) %>
-	        <% if tcoder %>
-	          <div class="row">
-	            <div class="col-md-5">
-	              <%= link_to image_tag(tcoder.avatar.thumb.to_s, :class => "img-thumbnail img-responsive"), user_path(tcoder) %>
-	            </div>
-	            <div class="col-md-7">
-	              <%= link_to tcoder.nickname, user_path(tcoder) %><br>
-	              <blockquote><dfn><%= tcoder.motto %></dfn></blockquote>
-	            </div>
-	          </div>
-	        <% end %>
-	      </div>
-	    </div>
-	  </div>
-	  <div class="col-md-5">
-	    <div class="row">
-	      <div class="col-md-6">
-	        <div class="panel panel-default">
-	          <div class="panel-heading">
-	            <h1 class="panel-title">User's AC Ratio</h1>
-	          </div>
-	          <div class="panel-body">
-	            <%= users_ac_ratio(@problem) %>
-	          </div>
-	        </div>
-	      </div>
-	      <div class="col-md-6">
-	        <div class="panel panel-default">
-	          <div class="panel-heading">
-	            <h1 class="panel-title">Submission's AC Ratio</h1>
-	          </div>
-	          <div class="panel-body">
-	            <%= submissions_ac_ratio(@problem) %>
-	          </div>
-	        </div>
-	      </div>
-	    </div>
-	  </div>
-	  <div class="col-md-3">
-	    <div class="panel panel-default">
-	      <div class="panel-heading">
-	        <h1 class="panel-title">Tags</h1>
-	      </div>
-	      <div class="panel-body">
-	        <%= raw @problem.tag_list.map{ |a| link_to a, problems_tag_path(a), :class => 'btn btn-xs btn-default' }.join(" ") %>
-	      </div>
-	    </div>
-	  </div>
-	</div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h1 class="panel-title">TopCoder</h1>
+        </div>
+        <div class="panel-body">
+          <% tcoder = topcoder(@problem) %>
+          <% if tcoder %>
+            <div class="row">
+              <div class="col-md-5">
+                <%= link_to image_tag(tcoder.avatar.thumb.to_s, :class => "img-thumbnail img-responsive"), user_path(tcoder) %>
+              </div>
+              <div class="col-md-7">
+                <%= link_to tcoder.nickname, user_path(tcoder) %><br>
+                <blockquote><dfn><%= tcoder.motto %></dfn></blockquote>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h1 class="panel-title">User's AC Ratio</h1>
+            </div>
+            <div class="panel-body">
+              <%= users_ac_ratio(@problem) %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h1 class="panel-title">Submission's AC Ratio</h1>
+            </div>
+            <div class="panel-body">
+              <%= submissions_ac_ratio(@problem) %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h1 class="panel-title">Tags</h1>
+        </div>
+        <div class="panel-body">
+          <%= raw @problem.tag_list.map{ |a| link_to a, problems_tag_path(a), :class => 'btn btn-xs btn-default' }.join(" ") %>
+        </div>
+      </div>
+    </div>
+  </div>
 <% end %>
 
 <div class="panel panel-default">
@@ -132,7 +136,7 @@
     <div class="panel panel-default copy-group problem-copy-group">
       <div class="panel-heading">
         <h1 class="panel-title pull-left">Sample Input</h1>
-				<button class="btn btn-default btn-xs pull-right copy-group-btn"> copy </button>
+        <button class="btn btn-default btn-xs pull-right copy-group-btn"> copy </button>
       </div>
       <div class="panel-body code-input copy-group-code" style="font-size:15px;line-height:18px;">
         <%= raw @problem.example_input.gsub(/\n/, '<br/>') %>
@@ -143,7 +147,7 @@
     <div class="panel panel-default copy-group problem-copy-group">
       <div class="panel-heading">
         <h1 class="panel-title pull-left">Sample Output</h1>
-				<button class="btn btn-default btn-xs pull-right copy-group-btn"> copy </button>
+        <button class="btn btn-default btn-xs pull-right copy-group-btn"> copy </button>
       </div>
       <div class="panel-body code-input copy-group-code" style="font-size:15px;line-height:18px;">
         <%= raw @problem.example_output.gsub(/\n/, '<br/>') %>

@@ -3,27 +3,28 @@
 
 		let divs = document.querySelectorAll(".copy-group")
 
-		for (let i in divs)
-			initialize(divs[i])
+		divs.forEach((div, idx, _) => initialize(div))
 
 		function initialize(div) {
+			console.log(div)
+
 			let btn = div.getElementsByClassName("copy-group-btn")[0]
 			let code = div.getElementsByClassName("copy-group-code")[0]
 
-
 			btn.addEventListener('click', (e) => {
-				let range = document.createRange()
-				range.selectNode(code)
-				window.getSelection().addRange(range)
 				try {
+					let el = document.createElement('textarea')
+					el.value = code.innerText
+					document.body.appendChild(el)
+					el.select()
 					if (document.execCommand('copy')) 
 						generate_success_notify()
 					else 
 						generate_failed_notify()
+					document.body.removeChild(el)
 				} catch (err) {
 					generate_error_notify(err)
 				}
-				window.getSelection().removeAllRanges()
 			})
 		}
 

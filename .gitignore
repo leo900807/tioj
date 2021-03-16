@@ -51,3 +51,5 @@
 Dockerfile
 docker-compose.yml
 *.swp
+
+passenger.*.pid.lock
